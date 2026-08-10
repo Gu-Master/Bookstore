@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Книга</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="shell">
+    <nav class="nav">
+        <a th:href="@{/borrowings}">Выдачи</a>
+        <a class="active" th:href="@{/books}">Книги</a>
+        <a th:href="@{/clients}">Клиенты</a>
+        <a th:href="@{/api/readers}" target="_blank">REST JSON</a>
+    </nav>
+
+    <section class="card">
+        <div class="header">
+            <div>
+                <h1 th:text="${pageTitle}">Форма книги</h1>
+                <p class="muted">Заполните основные сведения о книге.</p>
+            </div>
+        </div>
+
+        <form method="post" th:action="${formAction}" th:object="${bookForm}">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="title">Наименование</label>
+                    <input id="title" type="text" th:field="*{title}">
+                    <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                </div>
+
+                <div class="field">
+                    <label for="author">Автор</label>
+                    <input id="author" type="text" th:field="*{author}">
+                    <span class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+                </div>
+
+                <div class="field">
+                    <label for="isbn">ISBN</label>
+                    <input id="isbn" type="text" th:field="*{isbn}">
+                    <span class="error" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></span>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <a class="button secondary" th:href="@{/books}">Назад к списку</a>
+                <button type="submit" th:text="${submitLabel}">Сохранить</button>
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

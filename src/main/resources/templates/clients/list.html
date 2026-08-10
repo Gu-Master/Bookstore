@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клиенты</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="shell">
+    <nav class="nav">
+        <a th:href="@{/borrowings}">Выдачи</a>
+        <a th:href="@{/books}">Книги</a>
+        <a class="active" th:href="@{/clients}">Клиенты</a>
+        <a th:href="@{/api/readers}" target="_blank">REST JSON</a>
+    </nav>
+
+    <section class="card">
+        <div class="header">
+            <div>
+                <h1>Клиенты</h1>
+                <p class="muted">Список клиентов библиотеки с пагинацией по 20 записей.</p>
+            </div>
+            <a class="button" th:href="@{/clients/new}">Добавить клиента</a>
+        </div>
+
+        <div class="empty" th:if="${clients.isEmpty()}">Клиентов пока нет.</div>
+
+        <table th:if="${!clients.isEmpty()}">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>ФИО</th>
+                <th>Дата рождения</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${clients.content}">
+                <td th:text="${client.id}">1</td>
+                <td th:text="${client.fullName}">Иван Иванов</td>
+                <td th:text="${#temporals.format(client.birthDate, 'dd.MM.yyyy')}">01.01.1990</td>
+                <td>
+                    <div class="actions">
+                        <a class="button secondary" th:href="@{/clients/{id}/edit(id=${client.id})}">Редактировать</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="toolbar">
+            <span class="muted" th:text="|Страница ${clients.number + 1} из ${clients.totalPages == 0 ? 1 : clients.totalPages}|"></span>
+            <div class="actions">
+                <a class="button secondary" th:if="${clients.hasPrevious()}" th:href="@{/clients(page=${clients.number - 1})}">Назад</a>
+                <a class="button secondary" th:if="${clients.hasNext()}" th:href="@{/clients(page=${clients.number + 1})}">Вперед</a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

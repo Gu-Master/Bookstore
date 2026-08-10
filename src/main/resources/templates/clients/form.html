@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Клиент</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="shell">
+    <nav class="nav">
+        <a th:href="@{/borrowings}">Выдачи</a>
+        <a th:href="@{/books}">Книги</a>
+        <a class="active" th:href="@{/clients}">Клиенты</a>
+        <a th:href="@{/api/readers}" target="_blank">REST JSON</a>
+    </nav>
+
+    <section class="card">
+        <div class="header">
+            <div>
+                <h1 th:text="${pageTitle}">Форма клиента</h1>
+                <p class="muted">Заполните сведения о клиенте библиотеки.</p>
+            </div>
+        </div>
+
+        <form method="post" th:action="${formAction}" th:object="${clientForm}">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="fullName">ФИО</label>
+                    <input id="fullName" type="text" th:field="*{fullName}">
+                    <span class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+                </div>
+
+                <div class="field">
+                    <label for="birthDate">Дата рождения</label>
+                    <input id="birthDate" type="date" th:field="*{birthDate}">
+                    <span class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></span>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <a class="button secondary" th:href="@{/clients}">Назад к списку</a>
+                <button type="submit" th:text="${submitLabel}">Сохранить</button>
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>
