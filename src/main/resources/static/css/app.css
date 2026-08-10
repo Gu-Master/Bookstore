@@ -1,0 +1,156 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #f4f7fb;
+    color: #1d2a3a;
+}
+
+.shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.nav a {
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #244062;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(36, 64, 98, 0.08);
+}
+
+.nav a.active {
+    background: #244062;
+    color: #ffffff;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 12px 32px rgba(20, 43, 72, 0.08);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.muted {
+    color: #5b6f86;
+}
+
+.button,
+button {
+    display: inline-block;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    background: #146356;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.button.secondary {
+    background: #e9eef5;
+    color: #1d2a3a;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #e8edf4;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    color: #5b6f86;
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label {
+    font-weight: 600;
+}
+
+.field input,
+.field select {
+    border: 1px solid #d5deea;
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-size: 15px;
+    background: #ffffff;
+}
+
+.error {
+    color: #b63b3b;
+    font-size: 14px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.empty {
+    padding: 24px;
+    border-radius: 14px;
+    background: #f8fafc;
+    color: #5b6f86;
+    text-align: center;
+}
+
+@media (max-width: 720px) {
+    .header,
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,5 @@
+target/
+.idea/
+*.iml
+*.log
+LOCAL_ARCHITECTURE_GUIDE.md
