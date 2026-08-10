@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выдать книгу</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="shell">
+    <nav class="nav">
+        <a class="active" th:href="@{/borrowings}">Выдачи</a>
+        <a th:href="@{/books}">Книги</a>
+        <a th:href="@{/clients}">Клиенты</a>
+        <a th:href="@{/api/readers}" target="_blank">REST JSON</a>
+    </nav>
+
+    <section class="card">
+        <div class="header">
+            <div>
+                <h1>Выдать книгу</h1>
+                <p class="muted">Количество книг одного ISBN считаем бесконечным, поэтому фиксируем только факт выдачи.</p>
+            </div>
+        </div>
+
+        <div class="empty" th:if="${clients.isEmpty() or books.isEmpty()}">
+            Для оформления выдачи сначала добавьте хотя бы одного клиента и одну книгу.
+        </div>
+
+        <form method="post" th:action="@{/borrowings}" th:object="${borrowingForm}" th:if="${!clients.isEmpty() and !books.isEmpty()}">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="clientId">Клиент</label>
+                    <select id="clientId" th:field="*{clientId}">
+                        <option value="">Выберите клиента</option>
+                        <option th:each="client : ${clients}"
+                                th:value="${client.id}"
+                                th:text="${client.fullName + ' (' + #temporals.format(client.birthDate, 'dd.MM.yyyy') + ')'}">
+                        </option>
+                    </select>
+                    <span class="error" th:if="${#fields.hasErrors('clientId')}" th:errors="*{clientId}"></span>
+                </div>
+
+                <div class="field">
+                    <label for="bookId">Книга</label>
+                    <select id="bookId" th:field="*{bookId}">
+                        <option value="">Выберите книгу</option>
+                        <option th:each="book : ${books}"
+                                th:value="${book.id}"
+                                th:text="${book.title + ' / ' + book.author + ' / ' + book.isbn}">
+                        </option>
+                    </select>
+                    <span class="error" th:if="${#fields.hasErrors('bookId')}" th:errors="*{bookId}"></span>
+                </div>
+
+                <div class="field">
+                    <label for="borrowedAt">Дата выдачи</label>
+                    <input id="borrowedAt" type="date" th:field="*{borrowedAt}">
+                    <span class="error" th:if="${#fields.hasErrors('borrowedAt')}" th:errors="*{borrowedAt}"></span>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <a class="button secondary" th:href="@{/borrowings}">Назад к списку</a>
+                <button type="submit">Оформить выдачу</button>
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выдачи книг</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<div class="shell">
+    <nav class="nav">
+        <a class="active" th:href="@{/borrowings}">Выдачи</a>
+        <a th:href="@{/books}">Книги</a>
+        <a th:href="@{/clients}">Клиенты</a>
+        <a th:href="@{/api/readers}" target="_blank">REST JSON</a>
+    </nav>
+
+    <section class="card">
+        <div class="header">
+            <div>
+                <h1>Выдачи книг</h1>
+                <p class="muted">История выдач с подгруженными связями без N+1 в UI.</p>
+            </div>
+            <a class="button" th:href="@{/borrowings/new}">Выдать книгу</a>
+        </div>
+
+        <div class="empty" th:if="${borrowings.isEmpty()}">Выдач пока нет.</div>
+
+        <table th:if="${!borrowings.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Дата выдачи</th>
+                <th>Клиент</th>
+                <th>Дата рождения</th>
+                <th>Книга</th>
+                <th>Автор</th>
+                <th>ISBN</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="borrowing : ${borrowings.content}">
+                <td th:text="${#temporals.format(borrowing.borrowedAt, 'dd.MM.yyyy')}">10.08.2026</td>
+                <td th:text="${borrowing.client.fullName}">Иван Иванов</td>
+                <td th:text="${#temporals.format(borrowing.client.birthDate, 'dd.MM.yyyy')}">01.01.1990</td>
+                <td th:text="${borrowing.book.title}">Книга</td>
+                <td th:text="${borrowing.book.author}">Автор</td>
+                <td th:text="${borrowing.book.isbn}">ISBN</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="toolbar">
+            <span class="muted" th:text="|Страница ${borrowings.number + 1} из ${borrowings.totalPages == 0 ? 1 : borrowings.totalPages}|"></span>
+            <div class="actions">
+                <a class="button secondary" th:if="${borrowings.hasPrevious()}" th:href="@{/borrowings(page=${borrowings.number - 1})}">Назад</a>
+                <a class="button secondary" th:if="${borrowings.hasNext()}" th:href="@{/borrowings(page=${borrowings.number + 1})}">Вперед</a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
