@@ -1,65 +1,63 @@
 # Library App
 
-Simple Spring Boot web application for managing library books, clients, and borrowings.
+Веб-приложение для учета книг, клиентов и выдач в библиотеке.
 
-Repository:
+Репозиторий: `https://github.com/Gu-Master/Bookstore`
 
-`https://github.com/Gu-Master/Bookstore`
+## Технологии
 
-## Technologies
+- Java 1.8
+- Spring Boot 2.7.18
+- Spring Web MVC
+- Thymeleaf
+- Spring Data JPA
+- PostgreSQL 14
+- Maven
 
-- JDK: `Java 1.8`
-- IoC / Framework: `Spring Boot 2.7.18`
-- Front: `Spring Web MVC` + `Thymeleaf`
-- Database: `PostgreSQL 14`
-- Build tool: `Maven`
+## Функциональность
 
-## Implemented Features
+- просмотр списка книг
+- добавление и редактирование книги
+- просмотр списка клиентов
+- добавление и редактирование клиента
+- оформление выдачи книги клиенту
+- REST API со списком выданных книг
 
-- list of books
-- add book: title, author, ISBN
-- edit book
-- list of clients
-- add client: full name, birth date
-- edit client
-- borrowing form for taking a book to read
-- REST endpoint with JSON report of all current borrowings
-
-REST endpoint:
+REST API:
 
 - `GET /api/readers`
 
-Returned fields:
+Поля ответа:
 
-- client full name
-- client birth date
-- book title
-- book author
-- book ISBN
-- borrowing date
+- ФИО клиента
+- дата рождения клиента
+- наименование книги
+- автор книги
+- ISBN книги
+- дата выдачи книги
 
-## Required Setup
+## Настройка
 
-Install:
+Требуется:
 
-- JDK 8 or newer
-- Maven
+- JDK 8 или новее
 - PostgreSQL 14
+- Maven
 
-Create an empty database:
+Необходимо создать базу данных:
 
 ```sql
 CREATE DATABASE library_db;
 ```
 
-The application reads configuration from environment variables:
+Приложение использует переменные окружения:
 
-- `DB_URL` default: `jdbc:postgresql://localhost:5432/library_db`
-- `DB_USERNAME` default: `postgres`
-- `DB_PASSWORD` default: `postgres`
-- `SERVER_PORT` default: `8080`
+- `DB_URL` по умолчанию: `jdbc:postgresql://localhost:5432/library_db`
+- `DB_USERNAME` по умолчанию: `postgres`
+- `DB_PASSWORD` по умолчанию: `postgres`
+- `SERVER_PORT` по умолчанию: `8080`
 
-Example for Windows PowerShell:
+Пример для Windows PowerShell:
 
 ```powershell
 $env:DB_URL="jdbc:postgresql://localhost:5432/library_db"
@@ -68,31 +66,27 @@ $env:DB_PASSWORD="postgres"
 $env:SERVER_PORT="8080"
 ```
 
-## Build
-
-Compilation used by reviewers:
+## Сборка
 
 ```bash
 mvn package
 ```
 
-Result artifact:
+После сборки создается файл:
 
 `target/library-app-0.0.1-SNAPSHOT.jar`
 
-## Run
-
-Run the packaged application:
+## Запуск
 
 ```bash
 java -jar target/library-app-0.0.1-SNAPSHOT.jar
 ```
 
-## Database Schema
+## База данных
 
-Database tables are created automatically on application startup by Hibernate.
+Таблицы создаются автоматически при старте приложения.
 
-Relevant setting:
+Используемая настройка:
 
 ```yaml
 spring:
@@ -101,23 +95,18 @@ spring:
       ddl-auto: update
 ```
 
-Important note:
+База данных `library_db` должна существовать до запуска приложения.
 
-- the PostgreSQL database itself must already exist
-- tables and indexes are created automatically by the application
+## Доступные страницы
 
-## Available Pages
-
-- Home: `http://localhost:8080/`
-- Books: `http://localhost:8080/books`
-- Clients: `http://localhost:8080/clients`
-- Borrowings: `http://localhost:8080/borrowings`
+- главная: `http://localhost:8080/`
+- книги: `http://localhost:8080/books`
+- клиенты: `http://localhost:8080/clients`
+- выдачи: `http://localhost:8080/borrowings`
 - REST API: `http://localhost:8080/api/readers`
 
-## Notes About Performance
+## Дополнительно
 
-- paginated lists for books, clients, and borrowings
-- unique constraint on ISBN
-- indexes on borrowing table
-- `EntityGraph` is used for borrowing list to avoid N+1 on web page rendering
-- DTO projection is used for the REST report
+- для списков используется пагинация
+- для ISBN установлено ограничение уникальности
+- для таблицы выдач созданы индексы
